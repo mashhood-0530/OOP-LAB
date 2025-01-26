@@ -1,0 +1,216 @@
+Q1:
+#include <iostream>
+using namespace std;
+
+int main() {
+    float arr[20];
+    float *ptr = arr;
+    int n = 20;
+    
+    cout << "Enter 20 float numbers: ";
+    for (int i = 0; i < n; i++) {
+        cin >> *(ptr + i);
+    }
+    
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (*(ptr + j) > *(ptr + j + 1)) {
+                float temp = *(ptr + j);
+                *(ptr + j) = *(ptr + j + 1);
+                *(ptr + j + 1) = temp;
+            }
+        }
+    }
+    
+    cout << "The second highest number is: " << *(ptr + n - 2) << endl;
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+Q2:
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cout << "Enter the number of elements: ";
+    cin >> n;
+
+    int arr[n];  
+    int sum = 0;
+
+    cout << "Enter " << n << " integers: ";
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+
+    for (int i = 0; i < n; i++) {
+        sum += arr[i];  
+    }
+
+    cout << "The sum of all elements is: " << sum << endl;
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+Q3:
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    int customerID, unitsConsumed;
+    string customerName;
+    cout << "Enter Customer ID: ";
+    cin >> customerID;
+    cout << "Enter Customer Name: ";
+    cin >> customerName;
+    cout << "Enter Units Consumed: ";
+    cin >> unitsConsumed;
+
+    double chargePerUnit, totalAmount, surcharge = 0, netAmount;
+    if (unitsConsumed <= 199) {
+        chargePerUnit = 16.20;
+    } else if (unitsConsumed >= 200 && unitsConsumed < 300) {
+        chargePerUnit = 20.10;
+    } else if (unitsConsumed >= 300 && unitsConsumed < 500) {
+        chargePerUnit = 27.10;
+    } else {
+        chargePerUnit = 35.90;
+    }
+
+    totalAmount = unitsConsumed * chargePerUnit;
+    if (totalAmount > 18000) {
+        surcharge = totalAmount * 0.15;
+    }
+    netAmount = totalAmount + surcharge;
+
+    cout << "Customer ID : " << customerID << endl;
+    cout << "Customer Name: " << customerName << endl;
+    cout << "Units Consumed : " << unitsConsumed << endl;
+    cout << "Amount Charges @Rs. " << chargePerUnit << " per unit: " << totalAmount << endl;
+    cout << "Surcharge Amount: " << surcharge << endl;
+    cout << "Net Amount Paid by the Customer: " << netAmount << endl;
+
+    return 0;
+}
+
+
+
+
+
+
+Q4:
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main()
+{
+    float weight, pounds;
+
+    cout << "Enter weight in kilograms: ";
+    cin >> weight;
+
+    pounds = 2.2 * weight;
+
+    cout << "Weight in kilograms: " << fixed << setprecision(2) << weight << endl;
+    cout << "Equivalent weight in pounds: " << fixed << setprecision(2) << pounds << endl;
+
+    return 0;
+}
+
+
+
+
+
+
+
+Q5:
+#include <iostream>
+#include <iomanip>
+#include <string>
+using namespace std;
+
+int main() {
+    string movieName;
+    double adultTicketPrice, childTicketPrice;
+    int adultTicketsSold, childTicketsSold;
+    double donationPercentage;
+
+    cout << "Enter the movie name: ";
+    getline(cin, movieName);
+    cout << "Enter the price of an adult ticket: ";
+    cin >> adultTicketPrice;
+    cout << "Enter the price of a child ticket: ";
+    cin >> childTicketPrice;
+    cout << "Enter the number of adult tickets sold: ";
+    cin >> adultTicketsSold;
+    cout << "Enter the number of child tickets sold: ";
+    cin >> childTicketsSold;
+    cout << "Enter the percentage of gross amount to be donated: ";
+    cin >> donationPercentage;
+
+    double grossAmount = (adultTicketPrice * adultTicketsSold) + (childTicketPrice * childTicketsSold);
+    double amountDonated = grossAmount * (donationPercentage / 100);
+    double netSale = grossAmount - amountDonated;
+
+    cout << "\n-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n";
+    cout << left << setw(40) << "Movie Name:" << movieName << endl;
+    cout << left << setw(40) << "Number of Tickets Sold:" << (adultTicketsSold + childTicketsSold) << endl;
+    cout << left << setw(40) << "Gross Amount:" << right << "$ " << fixed << setprecision(2) << grossAmount << endl;
+    cout << left << setw(40) << "Percentage of Gross Amount Donated:" << fixed << setprecision(2) << donationPercentage << "%" << endl;
+    cout << left << setw(40) << "Amount Donated:" << right << "$ " << fixed << setprecision(2) << amountDonated << endl;
+    cout << left << setw(40) << "Net Sale:" << right << "$ " << fixed << setprecision(2) << netSale << endl;
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+Q6:
+#include <iostream>
+#include <iomanip>
+#include <string>
+using namespace std;
+
+int main() {
+    string firstName, lastName;
+    double score1, score2, score3, score4, score5;
+
+    cout << "Enter student name followed by five test scores: ";
+    cin >> firstName >> lastName >> score1 >> score2 >> score3 >> score4 >> score5;
+
+    string studentName = firstName + " " + lastName;
+    double averageScore = (score1 + score2 + score3 + score4 + score5) / 5;
+
+    cout << "\nStudent name: " << studentName << endl;
+    cout << "Test scores: "
+         << fixed << setprecision(2) << score1 << " "
+         << score2 << " " << score3 << " "
+         << score4 << " " << score5 << endl;
+    cout << "Average test score: " << fixed << setprecision(2) << averageScore << endl;
+
+    return 0;
+}
+
