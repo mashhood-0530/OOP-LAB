@@ -1,0 +1,313 @@
+TASK 1;
+
+#include <iostream>
+#include <cstdlib>
+
+using namespace std;
+
+int main(int argc, char *argv[]) {
+    if (argc < 2) {
+        cout << "Usage: " << argv[0] << " num1 num2 num3 ..." << endl;
+        return 1;
+    }
+
+    int sum = 0;
+    char **argPtr = argv + 1;  
+
+    while (argPtr < argv + argc) {
+        sum += atoi(*argPtr);  
+        argPtr++;  
+    }
+
+    cout << "Total sum of elements: " << sum << endl;
+    return 0;
+}
+
+
+
+
+
+TASK 2;
+
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+void* arrOp(void* arr,int size)
+{
+    int* c=new int[size];
+    for(int i=0;i<size;i++)
+    {
+    c[i]=((int*)arr)[i]+i;
+    }
+    void* newArr=c;
+    return newArr;
+}
+int main(int argc,char* argv[])
+{
+    int* arr=new int[argc-1];
+    for(int i=0;i<argc-1;i++)
+    {
+        arr[i]=atoi(argv[i+1]);
+    }
+   void* newArr=arrOp((void*) arr,argc-1);
+   for(int i=0;i<argc-1;i++)
+   {
+    cout<<"Element "<<i+1<<": "<<((int*)newArr)[i]<<endl;
+   }
+    delete[] arr;
+    delete[] (int*)newArr;
+}
+
+
+
+
+
+
+TASK 3;
+
+#include<iostream>
+using namespace std;
+
+int main() {
+    int size = 5, index = 0;
+    int* arr = new int[size];
+
+    while (true) {
+        if (index == size) {
+            size *= 2;
+            int* temp = new int[size];
+            for (int i = 0; i < index; i++) {
+                temp[i] = arr[i];
+            }
+            delete[] arr;
+            arr = temp;
+        }
+
+        cout << "Enter value " << index + 1 << " (-1 to stop): ";
+        int input;
+        cin >> input;
+
+        if (input == -1)
+            break;
+
+        arr[index++] = input;
+    }
+
+    int* finalArr = new int[index];
+    for (int i = 0; i < index; i++) {
+        finalArr[i] = arr[i];
+    }
+    delete[] arr;
+    arr = finalArr;
+
+    cout << "Stored values: " << endl;
+    for (int i = 0; i < index; i++) {
+        cout << "Item " << i + 1 << ": " << arr[i] << endl;
+    }
+
+    delete[] arr;
+}
+
+
+
+
+
+
+TASK 4;
+
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+struct Employee {
+    int employee_id;
+    char name[50];
+    double salary;
+};
+
+struct Organisation {
+    char organisation_name[50];
+    char organisation_number[20];
+    Employee emp; 
+};
+
+int main() {
+    Organisation org;
+
+    strcpy(org.organisation_name, "NU-Fast");
+    strcpy(org.organisation_number, "NUFAST123ABC");
+
+    org.emp.employee_id = 127;
+    strcpy(org.emp.name, "Linus Sebastian");
+    org.emp.salary = 400000;
+
+    
+    cout << "The size of structure organisation : " << sizeof(Organisation) << endl;
+    cout << "Organisation Name : " << org.organisation_name << endl;
+    cout << "Organisation Number : " << org.organisation_number << endl;
+    cout << "Employee id : " << org.emp.employee_id << endl;
+    cout << "Employee name : " << org.emp.name << endl;
+    cout << "Employee Salary : " << org.emp.salary << endl;
+
+    return 0;
+}
+
+
+
+
+
+
+TASK 5;
+
+#include <iostream>
+using namespace std;
+
+typedef struct {
+    int emp_id;
+    string emp_name;
+} Employee;
+
+void addRecord(Employee* empList, int* empCount, int maxSize) {
+    if (*empCount == maxSize) {
+        cout << "Maximum limit reached! Cannot add more records." << endl << endl;
+    } else {
+        cout << "Enter Employee ID: ";
+        cin >> empList[*empCount].emp_id;
+        cout << "Enter Employee Name: ";
+        cin.ignore();
+        getline(cin, empList[*empCount].emp_name);
+        cout << "Record added successfully!" << endl << endl;
+        (*empCount)++;
+    }
+}
+
+void sortById(Employee* empList, int empCount) {
+    for (int i = 0; i < empCount - 1; i++) {
+        for (int j = 0; j < empCount - i - 1; j++) {
+            if (empList[j].emp_id > empList[j + 1].emp_id) {
+                Employee temp = empList[j];
+                empList[j] = empList[j + 1];
+                empList[j + 1] = temp;
+            }
+        }
+    }
+    cout << "Employee records sorted by ID: " << endl;
+    for (int i = 0; i < empCount; i++) {
+        cout << "Employee ID: " << empList[i].emp_id << endl;
+        cout << "Employee Name: " << empList[i].emp_name << endl << endl;
+    }
+}
+
+void sortByName(Employee* empList, int empCount) {
+    for (int i = 0; i < empCount - 1; i++) {
+        for (int j = 0; j < empCount - i - 1; j++) {
+            if (empList[j].emp_name[0] > empList[j + 1].emp_name[0]) {
+                Employee temp = empList[j];
+                empList[j] = empList[j + 1];
+                empList[j + 1] = temp;
+            }
+        }
+    }
+    cout << "Employee records sorted alphabetically by name: " << endl;
+    for (int i = 0; i < empCount; i++) {
+        cout << "Employee ID: " << empList[i].emp_id << endl;
+        cout << "Employee Name: " << empList[i].emp_name << endl << endl;
+    }
+}
+
+int main() {
+    int maxRecords, empCount = 0;
+    cout << "Enter the maximum number of employees: ";
+    cin >> maxRecords;
+    Employee empList[maxRecords];
+    int option;
+
+    while (true) {
+        cout << "Select an option: " << endl;
+        cout << "1. Add an employee record" << endl;
+        cout << "2. Sort records by employee ID" << endl;
+        cout << "3. Sort records by employee name" << endl;
+        cout << "Press any other key to exit" << endl;
+        cout << "Your choice: ";
+        cin >> option;
+        cout << endl;
+
+        switch (option) {
+            case 1:
+                addRecord(empList, &empCount, maxRecords);
+                break;
+            case 2:
+                if (empCount < 2) {
+                    cout << "Only one record exists. Sorting is not required." << endl << endl;
+                } else {
+                    sortById(empList, empCount);
+                }
+                break;
+            case 3:
+                if (empCount < 2) {
+                    cout << "Only one record exists. Sorting is not required." << endl << endl;
+                } else {
+                    sortByName(empList, empCount);
+                }
+                break;
+            default:
+                cout << "Exiting the program..." << endl;
+                exit(0);
+        }
+    }
+}
+
+
+
+
+
+
+TASK 6;
+
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+struct Subject {
+    string name;
+};
+
+struct Student {
+    int id;
+    Subject subjects[3]; 
+};
+
+int main() {
+    vector<Student> students; 
+
+    Student student1;
+    student1.id = 1;
+    student1.subjects[0] = {"Math"};
+    student1.subjects[1] = {"Science"};
+    student1.subjects[2] = {"History"};
+    students.push_back(student1);
+
+    Student student2;
+    student2.id = 2;
+    student2.subjects[0] = {"English"};
+    student2.subjects[1] = {"Physics"};
+    student2.subjects[2] = {"Chemistry"};
+    students.push_back(student2);
+
+    
+    for (const auto& student : students) {
+        cout << "Student ID: " << student.id << "\n";
+        for (const auto& subject : student.subjects) {
+            cout << "  Subject: " << subject.name << "\n";
+        }
+        cout << "----------------------\n";
+    }
+    
+    return 0;
+}
+
+
+
